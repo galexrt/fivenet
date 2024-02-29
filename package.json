@@ -49,6 +49,7 @@
         "vee-validate": "4.12.5",
         "vue-color-input": "1.0.8",
         "vue-json-pretty": "2.3.0",
+        "vue-winbox": "^0.2.3",
         "vue3-charts": "^1.1.33"
     },
     "devDependencies": {
