@@ -2,6 +2,8 @@ import { STRATEGIES } from 'vue-i18n-routing';
 
 const appVersion: string = process.env.COMMIT_REF || 'COMMIT_REF';
 
+const globalMdcComponents = ['PartialsCitizensCitizenInfoPopover', 'UAlert', 'UButton', 'UIcon'] as const;
+
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
     srcDir: 'src/',
@@ -13,6 +15,8 @@ export default defineNuxtConfig({
     ssr: false,
     extends: [process.env.NUXT_UI_PRO_PATH || '@nuxt/ui-pro'],
     modules: [
+        '@nuxt/content',
+        '@nuxtjs/mdc',
         '@nuxt/ui',
         'nuxt-typed-router',
         '@nuxtjs/robots',
@@ -23,6 +27,7 @@ export default defineNuxtConfig({
         'nuxt-zod-i18n',
         '@nuxtjs/i18n',
         'nuxt-update',
+        '@nuxt/image',
     ],
     future: {
         compatibilityVersion: 4,
@@ -163,5 +168,13 @@ export default defineNuxtConfig({
         version: appVersion,
         checkInterval: 115,
         path: '/api/version',
+    },
+    hooks: {
+        // Define `@nuxt/ui` components as global to use them in `.md` (feel free to add those you need)
+        'components:extend': (components) => {
+            const globals = components.filter((c) => globalMdcComponents.includes(c.pascalName));
+
+            globals.forEach((c) => (c.global = true));
+        },
     },
 });
